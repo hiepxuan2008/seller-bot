@@ -192,7 +192,7 @@ class PostbackButton:
         self.postback_value = postback_value
 
     def to_json(self):
-        return json.dump({
+        return json.dumps({
             "type":"postback",
             "title":self.title,
             "payload":self.postback_value
@@ -204,7 +204,7 @@ class CallButton:
         self.phone_number = phone_number
 
     def to_json(self):
-        return json.dump({
+        return json.dumps({
             "type":"phone_number",
             "title":self.title,
             "payload":self.phone_number
