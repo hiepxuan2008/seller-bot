@@ -209,3 +209,47 @@ class CallButton:
             "title":self.title,
             "payload":self.phone_number
         })
+
+class URLButton:
+    def __init__(self, url, title):
+        self.title = title
+        self.url = url
+
+    def to_json(self):
+        return json.dumps({
+            "type":"web_url",
+            "url":self.url,
+            "title":self.title
+        })
+
+class BuyButton:
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        return json.dumps({
+                "type":"payment",
+                "title":"buy",
+                "payload":"DEVELOPER_DEFINED_PAYLOAD",
+                "payment_summary":{
+                  "currency":"USD",
+                  "payment_type":"FIXED_AMOUNT",
+                  "merchant_name":"Peter's Apparel",
+                  "requested_user_info":[
+                    "shipping_address",
+                    "contact_name",
+                    "contact_phone",
+                    "contact_email"
+                  ],
+                  "price_list":[
+                    {
+                      "label":"Subtotal",
+                      "amount":"29.99"
+                    },
+                    {
+                      "label":"Taxes",
+                      "amount":"2.47"
+                    }
+                  ]
+                }
+              })
