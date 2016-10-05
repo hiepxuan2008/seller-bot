@@ -70,6 +70,12 @@ def postData(data):
 def onPostbackEvent(sender_id, recipient_id, payload):
 	if payload == "T_SHIRT":
 		showTShirtProducts(sender_id)
+	# elif payload == "FEATURE":
+	# 	doMoreFeature(sender_id)
+	# elif payload == "LOCATION":
+	# 	showLocation(sender_id)
+	# elif payload == "VIDEO":
+	# 	showVideo(sender_id)
 
 def showTShirtProducts(recipient_id):
 	elements = [{
@@ -113,12 +119,112 @@ def greeting(sender_id):
 					"title":"Wallet",
 					"payload":"WALLET"
 				  }
-				]
+			]
 	doButtonTemplate(sender_id, text, buttons)
 
+
+
+# -------------------------- FB Messenger API Functions -----------------
+# Sender Actions
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/sender-actions
+def doSenderActions(recipient_id):
+	data = json.dumps({
+	  "recipient":{
+	  	"id":recipient_id
+	  },
+	  "sender_action":"typing_on"
+	})
+	postData(data)
+
+# Text Message
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/text-message
+def doTextMessage(recipient_id, message_text):
+	data = json.dumps({
+		"recipient": {
+			"id": recipient_id
+		},
+		"message": {
+			"text": message_text
+		}
+	})
+	postData(data)
+
+# Image Attachment
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/image-attachment
+def doImageAttachment(recipient_id, image_url):
+	data = json.dumps({
+			"recipient":{
+				"id":recipient_id
+			},
+			"message":{
+				"attachment":{
+				"type":"image",
+				"payload":{
+					"url":image_url
+				}
+			}
+		}
+	})
+	postData(data)
+
+# Audio Attachment
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/audio-attachment
+def doAudioAttachment(recipient_id, audio_url):
+	data = json.dumps({
+			"recipient":{
+				"id":recipient_id
+			},
+			"message":{
+				"attachment":{
+				"type":"audio",
+				"payload":{
+					"url":audio_url
+				}
+			}
+		}
+	})
+	postData(data)
+
+# Video Attachment
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/video-attachment
+def doVideoAttachment(recipient_id, video_url):
+	data = json.dumps({
+			"recipient":{
+				"id":recipient_id
+			},
+			"message":{
+				"attachment":{
+				"type":"video",
+				"payload":{
+					"url":video_url
+				}
+			}
+		}
+	})
+	postData(data)
+
+# File Attachment
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/file-attachment
+def doFileAttachment(recipient_id, file_url):
+	data = json.dumps({
+			"recipient":{
+				"id":recipient_id
+			},
+			"message":{
+				"attachment":{
+				"type":"file",
+				"payload":{
+					"url":file_url
+				}
+			}
+		}
+	})
+	postData(data)
+
 # Generic Template
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/generic-template
 def doGenericTemplate(recipient_id, elements):
-	data = {
+	data = json.dumps({
 		"recipient":{
 			"id":recipient_id
 		},
@@ -128,18 +234,19 @@ def doGenericTemplate(recipient_id, elements):
 			"payload":{
 				"template_type":"generic",
 				"elements":elements
-			}
+				}
 			}
 		}
-		}
-	
-	log("doGenericTemplate--------------")
-	log(data)
+	})
 
 	postData(data)
 
-
 # Button Template
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template
+# Params: 
+#	text: must be UTF-8 and has a 320 character limit
+#	buttons: is limited to 3
+
 def doButtonTemplate(recipient_id, text, buttons):
 	data = json.dumps({
 		  "recipient":{
@@ -159,27 +266,34 @@ def doButtonTemplate(recipient_id, text, buttons):
 
 	postData(data)
 
-# Sender Actions
-def doSenderActions(recipient_id):
-	data = json.dumps({
-	  "recipient":{
-	  	"id":recipient_id
-	  },
-	  "sender_action":"typing_on"
-	})
-	postData(data)
+# Receipt Template
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template
 
-# Text Message
-def doTextMessage(recipient_id, message_text):
-	#log("doTextMessage to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+def doReceiptTemplate(recipient_id, recipient_name, order_number, currency, payment_method, order_url, timestamp, elements, address, summary, adjustments):
 	data = json.dumps({
-		"recipient": {
-			"id": recipient_id
-		},
-		"message": {
-			"text": message_text
+	"recipient":{
+		"id":recipient_id
+	},
+	"message":{
+		"attachment":{
+			"type":"template",
+			"payload":{
+				"template_type":"receipt",
+				"recipient_name":recipient_name,
+				"order_number":order_number,
+				"currency":currency,
+				"payment_method":payment_method,		
+				"order_url":order_url,
+				"timestamp":timestamp, 
+				"elements":elements,
+				"address":address,
+				"summary":summary,
+				"adjustments":adjustments
+				}
+			}
 		}
 	})
+
 	postData(data)
 
  # simple wrapper for logging to stdout on heroku
