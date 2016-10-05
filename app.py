@@ -67,6 +67,8 @@ def on_message_received(sender_id, recipient_id, message):
     message_text = message["text"]
     if message_text == "help":
         help(sender_id)
+    else:
+        messenger.do_text_message(sender_id, "Invalid command, type help for the help")
 
 
 def go_shopping(recipient_id):
@@ -122,7 +124,7 @@ def shop_location(recipient_id):
 def call_for_help(recipient_id):
     phone_number = "0983892316"
     buttons = [
-        CallButton(phone_number, phone_number)
+        CallButton(phone_number, phone_number).to_json()
     ]
     messenger.do_button_template(recipient_id, "Make a phone call", buttons)
 
