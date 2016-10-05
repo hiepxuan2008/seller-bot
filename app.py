@@ -215,7 +215,7 @@ def help(recipient_id):
         PostbackButton("Shop Location", "SHOP_LOCATION").to_json(),
         PostbackButton("Call For Help", "CALL_FOR_HELP").to_json()
     ]
-    logger(buttons)
+    log(buttons)
     messenger.do_button_template(recipient_id, text, buttons)
 
 
