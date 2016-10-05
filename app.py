@@ -75,7 +75,7 @@ def go_shopping(recipient_id):
         "item_url": "http://www.lazada.vn/ao-thun-nam-co-tru-xanh-navi-2035572.html",
         "image_url": "http://vn-live-02.slatic.net/p/ao-thun-nam-co-tru-xanh-co-vit-1405-3755302-0a0daa09d238345d6a267ba403f7abbe-catalog_233.jpg",
         "buttons": [
-            BuyButton.to_json()
+            BuyButton().to_json()
         ]
     },
         {
@@ -83,7 +83,7 @@ def go_shopping(recipient_id):
             "item_url": "http://zanado.com/ao-thun-nam-jackies-b202-dep-gia-re-sid48907.html?color=98",
             "image_url": "http://a4vn.com/media/catalog/product/cache/all/thumbnail/255x298/7b8fef0172c2eb72dd8fd366c999954c/1/3/13_40_2.jpg",
             "buttons": [
-                BuyButton.to_json()
+                BuyButton().to_json()
             ]
         },
         {
@@ -91,7 +91,7 @@ def go_shopping(recipient_id):
             "item_url": "http://www.lazada.vn/ao-thun-nam-tay-raglan-do-do-phoi-trang-2056856.html?mp=1",
             "image_url": "http://vn-live-01.slatic.net/p/ao-thun-nam-tay-raglan-do-do-phoi-trang-2581-6586502-2d977472b068b70467eeb4e9d2e1122d-catalog_233.jpg",
             "buttons": [
-                BuyButton.to_json()
+                BuyButton().to_json()
             ]
         }]
 
