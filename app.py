@@ -64,8 +64,10 @@ def on_message_received(sender_id, recipient_id, message):
     if not message.get("text"):
         return
 
-    message_text = message.get("text")
-    if message_text == "hello":
+    message_text = message["text"]
+    log(message["text"])
+    log(message.get("text"))
+    if message_text == "help":
         help(sender_id)
 
 
@@ -167,6 +169,7 @@ def help(recipient_id):
         PostbackButton("Shop Location", "SHOP_LOCATION").to_json(),
         PostbackButton("Call For Help", "CALL_FOR_HELP").to_json()
     ]
+    log(buttons)
     messenger.do_button_template(recipient_id, text, buttons)
 
 
