@@ -122,7 +122,7 @@ def shop_location(recipient_id):
 
 
 def call_for_help(recipient_id):
-    phone_number = "0983892316"
+    phone_number = "+84983892316"
     buttons = [
         CallButton(phone_number, phone_number).to_json()
     ]
