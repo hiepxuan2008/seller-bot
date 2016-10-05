@@ -1,6 +1,6 @@
 import json
 import requests
-import log
+import logger
 
 
 class MessengerApi:
@@ -11,8 +11,8 @@ class MessengerApi:
     def post_data(self, data):
         r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=self.params, headers=self.headers, data=data)
         if r.status_code != 200:
-            log.log(r.status_code)
-            log.log(r.text)
+            logger.log(r.status_code)
+            logger.log(r.text)
 
     # Sender Actions
     # https://developers.facebook.com/docs/messenger-platform/send-api-reference/sender-actions

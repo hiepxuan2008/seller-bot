@@ -1,7 +1,7 @@
 import os
 import json
-import log
 
+from logger import log
 from flask import Flask, request
 from messenger_api import *
 
@@ -25,7 +25,7 @@ def webhook():
     # endpoint for processing incoming messaging events
 
     data = request.get_json()
-    log.log(data)  # you may not want to log every incoming message in production, but it's good for testing
+    log(data)  # you may not want to log every incoming message in production, but it's good for testing
 
     if data["object"] == "page":
 
@@ -169,7 +169,7 @@ def help(recipient_id):
         PostbackButton("Shop Location", "SHOP_LOCATION").to_json(),
         PostbackButton("Call For Help", "CALL_FOR_HELP").to_json()
     ]
-    log(buttons)
+    logger(buttons)
     messenger.do_button_template(recipient_id, text, buttons)
 
 
