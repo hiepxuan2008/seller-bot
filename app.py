@@ -98,52 +98,42 @@ def go_shopping(recipient_id):
     messenger.do_generic_template(recipient_id, elements)
 
 
+def shop_location(recipient_id):
+    latitude = 10.762952
+    longitude = 106.682340
+
+    elements = [
+        {
+            'title': "Nova Shop",
+            'subtitle': "227 Nguyen Van Cu, D5, HCM city",
+            # 'image_url': 'http://staticmap.openstreetmap.de/staticmap.php?center=' + latitude + ',' + longitude + '&zoom=18&size=640x480&markers=' + latitude + ',' + longitude + ',ol-marker',
+            'image_url': 'http://staticmap.openstreetmap.de/staticmap.php?center=10.762952,106.682340&zoom=15&size=640x480&markers=10.762952,106.682340,ol-marker',
+            'buttons': [
+                URLButton(
+                    url='http://maps.google.com/maps?q=loc:10.762952,106.682340&z=20',
+                    title="Show directions"
+                ).to_json()
+            ]
+        }
+    ]
+    messenger.do_generic_template(recipient_id, elements)
+
+
+def call_for_help(recipient_id):
+    phone_number = "0983892316"
+    buttons = [
+        CallButton(phone_number, phone_number)
+    ]
+    messenger.do_button_template(recipient_id, "Make a phone call", buttons)
+
+
 def on_postback_received(sender_id, recipient_id, payload):
     if payload == "GO_SHOPPING":
         go_shopping(sender_id)
-    # showTShirtProducts(sender_id)
-    # elif payload == "FEATURE":
-    #      doMoreFeature(sender_id)
-    # elif payload == "LOCATION":
-    #     showLocation(sender_id)
-    # elif payload == "VIDEO":
-    #     showVideo(sender_id)
-
-
-def doMoreFeature(recipient_id):
-    data = json.dumps({
-    "recipient":{
-        "id":recipient_id
-      },
-      "message":{
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"button",
-            "text":"What do you want to do next?",
-            "buttons":[
-              {
-                "type":"postback",
-                "title":"Products on Video",
-                "payload": "VIDEO"
-              },
-              {
-                "type":"postback",
-                "title":"Shop location",
-                "payload":"LOCATION"
-              },
-              {
-                "type":"postback",
-                "title":"Show webiste",
-                "payload":"WEBSITE"
-              }
-            ]
-          }
-        }
-      }
-    })
-    messenger.postData(data)
-
+    elif payload == "SHOP_LOCATION":
+        shop_location(sender_id)
+    elif payload == "CALL_FOR_HELP":
+        call_for_help(sender_id)
 
 def help(recipient_id):
     text = "Hi, Can I help you?"
@@ -154,29 +144,6 @@ def help(recipient_id):
     ]
     log(buttons)
     messenger.do_button_template(recipient_id, text, buttons)
-
-
-def greeting(recipient_id):
-    text = "Welcome to Nova shop, what are you looking for today?"
-    buttons = [
-                  {
-                    "type":"postback",
-                    "title":"T-Shirt",
-                    "payload":"T_SHIRT"
-                  },
-                  {
-                    "type":"postback",
-                    "title":"Jean",
-                    "payload":"JEAN"
-                  },
-                  {
-                    "type":"postback",
-                    "title":"Wallet",
-                    "payload":"WALLET"
-                  }
-            ]
-    messenger.do_button_template(recipient_id, text, buttons)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
