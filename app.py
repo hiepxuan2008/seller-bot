@@ -46,8 +46,8 @@ def webook():
                 # https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]  # the facebook ID of the person sending you the message
-                    message = messaging_event["message"]  # message from user
-                    on_postback_received(sender_id, message)
+                    payload = messaging_event["postback"]["payload"]  # payload from user
+                    on_postback_received(sender_id, payload)
 
     return "ok", 200
 
@@ -57,14 +57,17 @@ def on_message_received(sender_id, message):
 
     message_text = message["text"]
     if message_text == "hello":
-        do_send_message(sender_id, "hi")
+        send_text_message(sender_id, "hi")
+    else:
+        send_text_message(sender_id, "Invalid command, please send hello")
 
+def on_postback_received(sender_id, payload):
 
-def on_postback_received(sender_id, message):
     pass
 
-
-def do_send_message(recipient_id, message_text):
+# Send Message
+# https://developers.facebook.com/docs/messenger-platform/send-api-reference/text-message
+def send_text_message(recipient_id, message_text):
     data = json.dumps({
       "recipient":{
         "id":recipient_id
